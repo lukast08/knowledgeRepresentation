@@ -1,0 +1,14 @@
+<!-- home.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    <p>Welcome to our website!</p>
+    <img src="{{ url_for('static', filename='img/abra.jpg') }}" alt="Logo">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
