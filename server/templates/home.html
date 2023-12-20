@@ -8,7 +8,7 @@
 <body>
     <h1>{{ title }}</h1>
     <p>Welcome to our website!</p>
-    <img src="{{ url_for('static', filename='img/abra.jpg') }}" alt="Logo">
+    <img src="{{ 'https://pokemonkg.org/media/image/globallink/pokemon/' + pokemon + '.png' }}" alt="Picture of pokemon">
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
