@@ -1,34 +1,59 @@
-from rdflib import Dataset
+import threading
+from typing import Callable
 import random
+
+from sparql.sparql_api import sparql_api
 
 
 class Game:
-    def __init__(self):
-        self.dataset = Dataset()
-        try:
-            self.dataset.parse("poke-a.nq")
-        except Exception as e:
-            print(e)
-
     def draw_pokemon(self):
-        query = """
-        SELECT ?object
-        WHERE {
-            GRAPH <https://pokemonkg.org/dataset/pokewiki-de-pokemonlist> {
-                ?subject ?predicate ?object .
-                FILTER (?predicate = <http://www.w3.org/2000/01/rdf-schema#label>)
-                FILTER (lang(?object) = "" || lang(?object) = "en")
-            }
-        }
-        """
-
-        results = self.dataset.query(query)
-        pokemons = []
-        for result in results:
-            pokemon = str(result).split("Literal('")[1].split("'")[0]
-            pokemons.append(pokemon)
-
+        pokemons = sparql_api.list_pokemons()
         return random.choice(pokemons).lower()
+
+    def question_function(self):
+        print(self.draw_pokemon())
+        return 100, 200
+
+    @staticmethod
+    def pick_question(question_functions: list[Callable]) -> Callable:
+        smallest_max = 10_000
+        index = 0
+        for i, function in enumerate(question_functions):
+            result = function()
+            if max(result) > smallest_max:
+                smallest_max = max(result)
+                index = i
+
+        return question_functions[index]
+
+    def question_function_thread(self, result: list[any], index: int):
+        self.draw_pokemon()
+        result[index] = (index, (random.randint(100, 500), random.randint(100, 500)))
+
+    @staticmethod
+    def pick_question_parallel(question_functions: list[Callable]) -> Callable:
+        threads = []
+        results = [any] * len(question_functions)
+        for i, function in enumerate(question_functions):
+            thread = threading.Thread(target=function, args=(results, i))
+            threads.append(thread)
+            thread.start()
+
+        for thread in threads:
+            thread.join()
+
+        smallest_max = 10_000
+        index = 0
+        for res in results:
+            if max(res[1]) < smallest_max:
+                smallest_max = max(res[1])
+                index = res[0]
+
+        return question_functions[index]
 
 
 game_api = Game()
+game_api.pick_question([game_api.question_function, game_api.question_function, game_api.question_function,
+                        game_api.question_function, game_api.question_function])()
+
+# game_api.pick_question_parallel([game_api.question_function])()
