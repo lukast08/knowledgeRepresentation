@@ -26,7 +26,6 @@ class Game:
     def __init__(self) -> None:
         self.questions = deepcopy(all_questions)
         self.relevant_pokemons = set(pokemon.lower() for pokemon in all_pokemons)
-        self.selected_predicates = set()
         self.game_ended = False
 
     def restart_game(self):
@@ -81,7 +80,7 @@ class Game:
         while True:
             print("Think of a Pokemon...")
             print("Answer the questions with 'y' for yes or 'n' for no.")
-            max_iter = 16  # TODO why 16?
+            max_iter = 20
             for counter in range(1, max_iter):
                 question = self.select_random_best_question()
                 if question:
