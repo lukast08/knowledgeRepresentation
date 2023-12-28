@@ -77,6 +77,8 @@ class Game:
 
     def start(self):
         while True:
+            print("Think of a Pokemon...")
+            print("Answer the questions with 'y' for yes or 'n' for no.")
             max_iter = 16  # TODO why 16?
             for counter in range(1, max_iter):
                 question = self.select_random_best_question()
