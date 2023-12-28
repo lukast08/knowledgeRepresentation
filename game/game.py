@@ -4,10 +4,12 @@ import random
 from game.question import generate_all_questions
 from sparql.sparql_api import sparql_api
 
+POSSIBLE_ANSWERS = ["y", "n"]
+
 
 def wait_for_correct_input(message):
     answer = input(message)
-    if answer not in ["y", "n"]:
+    if answer not in POSSIBLE_ANSWERS:
         print("Sorry, answer only 'y' or 'n'.")
         wait_for_correct_input(message)
     else:
