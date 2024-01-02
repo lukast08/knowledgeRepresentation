@@ -31,15 +31,9 @@ class Game:
     def restart_game(self):
         self.__init__()
 
-    @staticmethod
-    def draw_pokemon():
-        pokemons = sparql_api.list_pokemons()
-        return random.choice(pokemons).lower()
-
     # Update relevant pokemons and exclude questions based on predicates
     def update_vid_yes_answer(self, target):
         self.relevant_pokemons &= target.matched_pokemons  # Intersection
-        # TODO can we implement this without the search?
         for ques in self.questions.values():
             if ques.triple.predicate_uri == target.triple.predicate_uri:
                 ques.excluded = True
