@@ -11,12 +11,11 @@ def wait_for_correct_input(message):
     answer = input(message)
     if answer not in POSSIBLE_ANSWERS:
         print("Sorry, answer only 'y' or 'n'.")
-        wait_for_correct_input(message)
+        return wait_for_correct_input(message)
     else:
         return answer
 
 
-# TODO: This will be done on server initialization (in production very rarely)
 print("Preparing........")
 all_pokemons = sparql_api.get_all_pokemons()
 all_questions = generate_all_questions(len(all_pokemons))
@@ -31,15 +30,9 @@ class Game:
     def restart_game(self):
         self.__init__()
 
-    @staticmethod
-    def draw_pokemon():
-        pokemons = sparql_api.list_pokemons()
-        return random.choice(pokemons).lower()
-
     # Update relevant pokemons and exclude questions based on predicates
     def update_vid_yes_answer(self, target):
         self.relevant_pokemons &= target.matched_pokemons  # Intersection
-        # TODO can we implement this without the search?
         for ques in self.questions.values():
             if ques.triple.predicate_uri == target.triple.predicate_uri:
                 ques.excluded = True
@@ -79,6 +72,17 @@ class Game:
     def start(self):
         while True:
             print("Think of a Pokemon...")
+
+            show_pokemon = wait_for_correct_input("Do you wish to see details of your pokemon? [y/n] ")
+            if show_pokemon == 'y':
+                pokemon_name = input("Enter the name of your pokemon: ")
+                pokemon_name = pokemon_name[0].upper()+pokemon_name[1:].lower()
+                if pokemon_name not in all_pokemons:
+                    print("I don't know this pokemon, please try again...")
+                    continue
+
+                sparql_api.get_pokemon_info(pokemon_name.lower())
+
             print("Answer the questions with 'y' for yes or 'n' for no.")
             max_iter = 20
             for counter in range(1, max_iter):
@@ -86,7 +90,7 @@ class Game:
                 if question:
                     question_detail = self.questions[question]
                     user_answer = wait_for_correct_input(
-                        f'{counter}.{question} [Y/N]: ({question_detail.count_yes},{question_detail.count_no}) :')
+                        f'{counter}.{question} [y/n]: ')
                     if user_answer == 'y':
                         self.update_vid_yes_answer(question_detail)
                     else:

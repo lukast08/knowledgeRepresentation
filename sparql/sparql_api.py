@@ -386,25 +386,24 @@ class SparqlAPI:
         print("Types:")
         for type in self.get_type_of(pokemon):
             print("\t" + type)
-        print("\nColor: " + self.get_color_of(pokemon))
-        print("\nShape: " + self.get_shape_of(pokemon))
-        print("\nCatch Rate: " + self.get_catch_rate_of(pokemon))
-        print("\nWeight: " + self.get_weight_of(pokemon))
-        print("\nHeight: " + self.get_height_of(pokemon))
-        print("\nHabitat: " + self.get_habitat_of(pokemon))
-        print("\nGenus: " + self.get_genus_of(pokemon))
-        print("\nMoves:")
+        print("Color: " + self.get_color_of(pokemon))
+        print("Shape: " + self.get_shape_of(pokemon))
+        print("Catch Rate: " + self.get_catch_rate_of(pokemon))
+        print("Weight: " + self.get_weight_of(pokemon))
+        print("Height: " + self.get_height_of(pokemon))
+        print("Habitat: " + self.get_habitat_of(pokemon))
+        print("Genus: " + self.get_genus_of(pokemon))
+        print("Moves:")
         for move in self.get_moves_of(pokemon):
             print("\t" + move)
 
-        print("\nPossible abilities:")
+        print("Possible abilities:")
         for possibleAbilities in self.get_possible_abilites_of(pokemon):
             print("\t" + possibleAbilities)
 
-        print("\nHidden abilities:")
+        print("Hidden abilities:")
         for hiddenAbilities in self.get_hidden_abilites_of(pokemon):
             print("\t" + hiddenAbilities)
-        print('\n\n')
 
 
 sparql_api = SparqlAPI()
