@@ -53,59 +53,59 @@ def generate_all_questions(total_pokemons):
     graph2 = '<http://pokemon.outofbits.com/dataset/pokeapi-co>'  # habitat,genus
 
     create_initial_questions(questions, total_pokemons,
-                             'Is pokemon of type: ',
+                             'Is the Pokémon of type ',
                              sparql_api.get_all_types(), Triple('https://pokemonkg.org/ontology#hasType',
                                                    'https://pokemonkg.org/ontology#PokéType:'), graph1)
 
     create_initial_questions(questions, total_pokemons,
-                             'Is pokemon: ',
+                             'Is the Pokémon ',
                              sparql_api.get_all_colors(),
                              Triple('https://pokemonkg.org/ontology#hasColour', 'http://dbpedia.org/resource/'), graph1)
 
     create_initial_questions(questions, total_pokemons,
-                             'Has pokemon hidden ability: ',
+                             'Does the Pokémon have the hidden ability ',
                              sparql_api.get_all_hidden_abilites(),
                              Triple('https://pokemonkg.org/ontology#mayHaveHiddenAbility',
                                     'https://pokemonkg.org/instance/ability/'), graph1)
 
     create_initial_questions(questions, total_pokemons,
-                             'Has pokemon possible ability: ',
+                             'Does the Pokémon have the possible ability ',
                              sparql_api.get_all_possible_abilites(),
                              Triple('https://pokemonkg.org/ontology#mayHaveAbility',
                                     'https://pokemonkg.org/instance/ability/'), graph1)
 
     create_initial_questions(questions, total_pokemons,
-                             'Is the shape of pokemon: ',
+                             'Is the shape of the Pokémon ',
                              sparql_api.get_all_shapes(),
                              Triple('https://pokemonkg.org/ontology#hasShape', 'https://pokemonkg.org/ontology#Shape:'),
                              graph1)
 
     create_initial_questions(questions, total_pokemons,
-                             'Has pokemon catch rate: ',
+                             'Does the Pokémon have a catch rate of ',
                              sparql_api.get_all_catch_rate(),
                              Triple('https://pokemonkg.org/ontology#hasCatchRate',
                                     '^^<http://www.w3.org/2001/XMLSchema#integer>', True), graph1)
 
     create_initial_questions(questions, total_pokemons,
-                             'Is pokemon found in: ',
+                             'Is the Pokémon found in ',
                              sparql_api.get_all_habitats(),
                              Triple('https://pokemonkg.org/ontology#foundIn',
                                     'https://pokemonkg.org/ontology#Habitat:'), graph2)
 
     create_initial_questions(questions, total_pokemons,
-                             'Dose pokemon have genus: ',
+                             'Is the Pokémon of genus ',
                              sparql_api.get_all_genus(),
                              Triple('https://pokemonkg.org/ontology#hasGenus', '@en', True), graph2)
 
     create_initial_questions(questions, total_pokemons,
-                             'Has pokemon this move: ',
+                             'Does the Pokémon have a move called ',
                              sparql_api.get_all_moves(),
                              Triple('https://pokemonkg.org/ontology#isAbleToApply',
                                     'https://pokemonkg.org/instance/move/'), graph1)
 
-    create_initial_questions_for_height_weight(questions, total_pokemons, 'Has pokemon this Weight: ', sparql_api.get_all_weights(),
+    create_initial_questions_for_height_weight(questions, total_pokemons, 'Does the Pokémon weight ', sparql_api.get_all_weights(),
                                                'weight')
-    create_initial_questions_for_height_weight(questions, total_pokemons, 'Has pokemon this Height: ', sparql_api.get_all_heights(),
+    create_initial_questions_for_height_weight(questions, total_pokemons, 'Is the height of the Pokémon ', sparql_api.get_all_heights(),
                                                'height')
 
     return questions
